@@ -1,0 +1,35 @@
+{% extends 'inventario/base.html' %}
+
+{% block title %}Lista de Órdenes{% endblock %}
+
+{% block content %}
+<h1>Lista de Órdenes</h1>
+<a href="{% url 'formulario_orden' %}" class="btn btn-primary">Añadir Orden</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Material</th>
+            <th>Cantidad</th>
+            <th>Fecha</th>
+            <th>Suministrador</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for orden in ordenes %}
+        <tr>
+            <td>{{ orden.id }}</td>
+            <td>{{ orden.material }}</td>
+            <td>{{ orden.cantidad }}</td>
+            <td>{{ orden.fecha_orden }}</td>
+            <td>{{ orden.suministrador }}</td>
+            <td>
+                <a href="{% url 'formulario_orden' orden.id %}" class="btn btn-warning">Editar</a>
+                <a href="{% url 'eliminar_orden' orden.id %}" class="btn btn-danger">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

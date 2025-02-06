@@ -1,0 +1,41 @@
+{% extends 'inventario/base.html' %}
+
+{% block content %}
+<h1>Materiales</h1>
+<a href="{% url 'formulario_material' %}" class="btn btn-primary mb-3">Agregar Material</a>
+<table class="table table-striped" id="tabla">
+    <thead>
+        <tr>
+            <th>Foto</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Unidad de Medida</th>
+            <th>Precio Unitario</th>
+            <th>Suministrador</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for material in materiales %}
+        <tr>
+            <td>
+                {% if material.foto %}
+                    <img src="{{ material.foto.url }}" alt="Foto de {{ material.equipo.nombre }}" width="100">
+                {% else %}
+                    No hay foto disponible
+                {% endif %}
+            </td>
+            <td>{{ material.nombre }}</td>
+            <td>{{ material.descripcion }}</td>
+            <td>{{ material.unidad_medida }}</td>
+            <td>{{ material.precio_unitario }}</td>
+            <td>{{ material.suministrador.nombre }}</td>
+            <td>
+                <a href="{% url 'editar_material' material.id %}" class="btn btn-sm btn-warning">Editar</a>
+                <a href="{% url 'eliminar_material' material.id %}" class="btn btn-sm btn-danger">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
