@@ -22,7 +22,7 @@ class SuministradorForm(forms.ModelForm):
             'nombre' : forms.TextInput(attrs={'class': 'form-control'}),        
             'direccion' : forms.TextInput(attrs={'class': 'form-control'}),
             'telefono' : forms.TextInput(attrs={'class': 'form-control'}),
-            'email': forms.EmailInput(attrs={'class': 'select2'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
             
         }
 
