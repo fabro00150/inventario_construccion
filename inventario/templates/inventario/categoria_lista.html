@@ -1,0 +1,29 @@
+{% extends 'inventario/base.html' %}
+
+{% block content %}
+<h1 class="main-title">Categorías</h1>
+<a href="{% url 'formulario_categoria' %}" class="btn btn-primary mb-3">Agregar Categoría</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Sección</th>
+            <th>Descripción</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for cat in categorias %}
+        <tr>
+            <td>{{ cat.nombre }}</td>
+            <td>{{ cat.seccion.nombre|default:"N/A" }}</td>
+            <td>{{ cat.description }}</td>
+            <td>
+                <a href="{% url 'editar_categoria' cat.id %}" class="btn btn-sm btn-warning">Editar</a>
+                <button onclick="confirmDelete('{% url 'eliminar_categoria' cat.id %}')" class="btn btn-sm btn-danger">Eliminar</button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

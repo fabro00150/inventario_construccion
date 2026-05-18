@@ -1,0 +1,27 @@
+{% extends 'inventario/base.html' %}
+
+{% block content %}
+<h1 class="main-title">Existencias de Materiales</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Material</th>
+            <th>Stock Disponible</th>
+            <th>Unidad</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for e in existencias %}
+        <tr>
+            <td>{{ e.material.nombre }}</td>
+            <td>{{ e.cantidad_disponible }}</td>
+            <td>{{ e.material.unidad_medida }}</td>
+            <td>
+                <button onclick="confirmDelete('{% url 'eliminar_existencia' e.id %}')" class="btn btn-sm btn-danger">Eliminar</button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

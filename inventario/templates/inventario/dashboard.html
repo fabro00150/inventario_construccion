@@ -1,0 +1,89 @@
+{% extends 'inventario/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1 class="main-title mb-4">Dashboard de Gestión</h1>
+
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-body">
+                    <h5 class="card-title text-white">Ventas Totales</h5>
+                    <p class="card-text h2">{{ total_ventas }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-body">
+                    <h5 class="card-title text-white">Ingresos Totales</h5>
+                    <p class="card-text h2">${{ ingresos_totales }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-body">
+                    <h5 class="card-title text-white">Stock Bajo (Mat)</h5>
+                    <p class="card-text h2">{{ alerta_materiales.count }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-body">
+                    <h5 class="card-title text-white">Stock Bajo (Prod)</h5>
+                    <p class="card-text h2">{{ alerta_productos.count }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header bg-rose text-white">
+                    <h5>Productos Más Vendidos</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for p in productos_mas_vendidos %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ p.producto__nombre }}
+                            <span class="badge bg-primary rounded-pill">{{ p.total_vendido }}</span>
+                        </li>
+                        {% empty %}
+                        <li class="list-group-item">No hay datos de ventas aún.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header bg-danger text-white">
+                    <h5>Alertas de Stock</h5>
+                </div>
+                <div class="card-body">
+                    <h6>Materiales Críticos:</h6>
+                    <ul>
+                        {% for m in alerta_materiales %}
+                        <li>{{ m.nombre }} ({{ m.existencia.cantidad_disponible }} {{ m.unidad_medida }})</li>
+                        {% empty %}
+                        <li>Todo en orden.</li>
+                        {% endfor %}
+                    </ul>
+                    <h6 class="mt-3">Productos Críticos:</h6>
+                    <ul>
+                        {% for p in alerta_productos %}
+                        <li>{{ p.nombre }} ({{ p.stock }} unidades)</li>
+                        {% empty %}
+                        <li>Todo en orden.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

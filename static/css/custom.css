@@ -1,0 +1,48 @@
+:root {
+    --primary-rose: #FFC0CB;
+    --secondary-rose: #DB7093;
+    --dark-rose: #C71585;
+    --bg-rose: #FFF0F5;
+}
+
+body {
+    background-color: var(--bg-rose);
+}
+
+.sidebar {
+    background-color: var(--secondary-rose) !important;
+}
+
+.sidebar-start, .sidebar-footer {
+    background-color: var(--secondary-rose) !important;
+}
+
+.sidebar-body-menu a {
+    color: white !important;
+}
+
+.sidebar-body-menu a:hover, .sidebar-body-menu a.active {
+    background-color: var(--dark-rose) !important;
+}
+
+.btn-primary {
+    background-color: var(--secondary-rose) !important;
+    border-color: var(--secondary-rose) !important;
+}
+
+.btn-primary:hover {
+    background-color: var(--dark-rose) !important;
+    border-color: var(--dark-rose) !important;
+}
+
+.main-title {
+    color: var(--dark-rose);
+}
+
+.card {
+    border-color: var(--primary-rose);
+}
+
+.card-title {
+    color: var(--secondary-rose);
+}

@@ -1,0 +1,29 @@
+{% extends 'inventario/base.html' %}
+
+{% block content %}
+<h1 class="main-title">Órdenes de Materiales</h1>
+<a href="{% url 'formulario_orden' %}" class="btn btn-primary mb-3">Nueva Orden</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Material</th>
+            <th>Cantidad</th>
+            <th>Fecha</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for orden in ordenes %}
+        <tr>
+            <td>{{ orden.material.nombre }}</td>
+            <td>{{ orden.cantidad }} {{ orden.material.unidad_medida }}</td>
+            <td>{{ orden.fecha_orden }}</td>
+            <td>
+                <a href="{% url 'editar_orden' orden.id %}" class="btn btn-sm btn-warning">Editar</a>
+                <button onclick="confirmDelete('{% url 'eliminar_orden' orden.id %}')" class="btn btn-sm btn-danger">Eliminar</button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
