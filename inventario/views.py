@@ -21,14 +21,14 @@ def dashboard(request):
     return render(request, 'inventario/dashboard.html', context)
 
 def catalogo(request):
-    productos = Producto.objects.filter(stock__gt=0)
-    return render(request, 'inventario/catalogo.html', {'productos': productos})
+    secciones = Seccion.objects.prefetch_related('productos').all()
+    return render(request, 'inventario/catalogo.html', {'secciones': secciones})
 
 # Views para Material
 @login_required
 def lista_materiales(request):
     materiales = Material.objects.all()
-    return render(request, 'inventario/material_lista.html', {'materiales': materiales})
+    return render(request, 'inventario/materiales/material_lista.html', {'materiales': materiales})
 
 @login_required
 def formulario_material(request, id=None):
@@ -43,7 +43,7 @@ def formulario_material(request, id=None):
             return redirect('lista_materiales')
     else:
         form = MaterialForm(instance=material)
-    return render(request, 'inventario/material_formulario.html', {'form': form})
+    return render(request, 'inventario/materiales/material_formulario.html', {'form': form})
 
 @login_required
 def eliminar_material(request, id):
@@ -56,7 +56,7 @@ def eliminar_material(request, id):
 @login_required
 def lista_secciones(request):
     secciones = Seccion.objects.all()
-    return render(request, 'inventario/seccion_lista.html', {'secciones': secciones})
+    return render(request, 'inventario/secciones/seccion_lista.html', {'secciones': secciones})
 
 @login_required
 def formulario_seccion(request, id=None):
@@ -71,7 +71,7 @@ def formulario_seccion(request, id=None):
             return redirect('lista_secciones')
     else:
         form = SeccionForm(instance=seccion)
-    return render(request, 'inventario/seccion_formulario.html', {'form': form})
+    return render(request, 'inventario/secciones/seccion_formulario.html', {'form': form})
 
 @login_required
 def eliminar_seccion(request, id):
@@ -84,7 +84,7 @@ def eliminar_seccion(request, id):
 @login_required
 def lista_categorias(request):
     categorias = Categoria.objects.all()
-    return render(request, 'inventario/categoria_lista.html', {'categorias': categorias})
+    return render(request, 'inventario/secciones/categoria_lista.html', {'categorias': categorias})
 
 @login_required
 def formulario_categoria(request, id=None):
@@ -99,7 +99,7 @@ def formulario_categoria(request, id=None):
             return redirect('lista_categorias')
     else:
         form = CategoriaForm(instance=categoria)
-    return render(request, 'inventario/categoria_formulario.html', {'form': form})
+    return render(request, 'inventario/secciones/categoria_formulario.html', {'form': form})
 
 @login_required
 def eliminar_categoria(request, id):
@@ -112,7 +112,7 @@ def eliminar_categoria(request, id):
 @login_required
 def lista_productos(request):
     productos = Producto.objects.all()
-    return render(request, 'inventario/producto_lista.html', {'productos': productos})
+    return render(request, 'inventario/arreglos/producto_lista.html', {'productos': productos})
 
 @login_required
 def formulario_producto(request, id=None):
@@ -127,7 +127,7 @@ def formulario_producto(request, id=None):
             return redirect('lista_productos')
     else:
         form = ProductoForm(instance=producto)
-    return render(request, 'inventario/producto_formulario.html', {'form': form})
+    return render(request, 'inventario/arreglos/producto_formulario.html', {'form': form})
 
 @login_required
 def eliminar_producto(request, id):
@@ -140,7 +140,7 @@ def eliminar_producto(request, id):
 @login_required
 def lista_ventas(request):
     ventas = Venta.objects.all().order_by('-fecha')
-    return render(request, 'inventario/venta_lista.html', {'ventas': ventas})
+    return render(request, 'inventario/ventas/venta_lista.html', {'ventas': ventas})
 
 @login_required
 def registrar_venta(request):
@@ -164,18 +164,18 @@ def registrar_venta(request):
     else:
         form = VentaForm()
     productos = Producto.objects.filter(stock__gt=0)
-    return render(request, 'inventario/venta_formulario.html', {'form': form, 'productos': productos})
+    return render(request, 'inventario/ventas/venta_formulario.html', {'form': form, 'productos': productos})
 
 @login_required
 def detalle_venta(request, id):
     venta = get_object_or_404(Venta, id=id)
-    return render(request, 'inventario/venta_detalle.html', {'venta': venta})
+    return render(request, 'inventario/ventas/venta_detalle.html', {'venta': venta})
 
 # Views para Orden
 @login_required
 def lista_ordenes(request):
     ordenes = Orden.objects.all()
-    return render(request, 'inventario/orden_lista.html', {'ordenes': ordenes})
+    return render(request, 'inventario/materiales/orden_lista.html', {'ordenes': ordenes})
 
 @login_required
 def formulario_orden(request, id=None):
@@ -190,7 +190,7 @@ def formulario_orden(request, id=None):
             return redirect('lista_ordenes')
     else:
         form = OrdenForm(instance=orden)
-    return render(request, 'inventario/orden_formulario.html', {'form': form})
+    return render(request, 'inventario/materiales/orden_formulario.html', {'form': form})
 
 @login_required
 def eliminar_orden(request, id):
@@ -203,7 +203,7 @@ def eliminar_orden(request, id):
 @login_required
 def lista_existencias(request):
     existencias = Existencia.objects.all()
-    return render(request, 'inventario/existencia_lista.html', {'existencias': existencias})
+    return render(request, 'inventario/materiales/existencia_lista.html', {'existencias': existencias})
 
 @login_required
 def eliminar_existencia(request, id):
@@ -224,4 +224,40 @@ def configurar_sitio(request):
             return redirect('configurar_sitio')
     else:
         form = ConfiguracionForm(instance=configuracion)
-    return render(request, 'inventario/configuracion_formulario.html', {'form': form})
+    return render(request, 'inventario/config/configuracion_formulario.html', {'form': form})
+
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.forms import AuthenticationForm
+
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('dashboard')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'inventario/login.html', {'form': form})
+
+def logout_view(request):
+    logout(request)
+    return redirect('catalogo')
+
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.forms import AuthenticationForm
+
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('dashboard')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'inventario/login.html', {'form': form})
+
+def logout_view(request):
+    logout(request)
+    return redirect('catalogo')

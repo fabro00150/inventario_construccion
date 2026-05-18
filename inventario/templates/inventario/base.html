@@ -117,12 +117,18 @@
                                 <span class="icon setting" aria-hidden="true"></span>CONFIGURACIÓN
                             </a>
                         </li>
+                        <li>
+                            <a href="{% url 'logout' %}" class="text-danger">
+                                <span class="icon logout" aria-hidden="true"></span>CERRAR SESIÓN
+                            </a>
+                        </li>
                     </ul>                    
                 </div>
             <div class="sidebar-footer">
                 <a href="##" class="sidebar-user">
                     <div class="sidebar-user-info">
-                        <span class="sidebar-user__title">Admin</span>
+                        <span class="sidebar-user__title">{{ user.username }}</span>
+                        <span class="sidebar-user__subtitle">Administrador</span>
                     </div>
                 </a>
             </div>

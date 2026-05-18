@@ -1,0 +1,17 @@
+{% extends 'inventario/base.html' %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card shadow-lg p-4" style="max-width: 400px; width: 100%; border-radius: 15px;">
+        <div class="text-center mb-4">
+            <h2 class="main-title">Iniciar Sesión</h2>
+            <p class="text-muted">Panel de Administración</p>
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary w-100 py-2 mt-3" style="border-radius: 10px;">Entrar al Sistema</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

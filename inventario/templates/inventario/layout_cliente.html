@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ config.nombre_sitio|default:"Palo de Rosa" }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    <style>
+        :root {
+            --primary-rose: {{ config.color_primario|default:"#FFC0CB" }};
+            --secondary-rose: {{ config.color_secundario|default:"#DB7093" }};
+        }
+        body { font-family: 'Poppins', sans-serif; background-color: #fffafb; }
+        h1, h2, .navbar-brand { font-family: 'Playfair Display', serif; }
+        .navbar { background-color: white !important; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .hero-section { background: linear-gradient(rgba(255,192,203,0.3), rgba(255,192,203,0.1)), url('https://images.unsplash.com/photo-1558905612-2633352fe50c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'); background-size: cover; background-position: center; padding: 100px 0; text-align: center; margin-bottom: 50px; }
+        .product-card { border: none; border-radius: 20px; transition: transform 0.3s; overflow: hidden; background: white; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .product-card:hover { transform: translateY(-10px); }
+        .product-card img { height: 300px; object-fit: cover; }
+        .section-title { position: relative; display: inline-block; margin-bottom: 30px; }
+        .section-title::after { content: ''; position: absolute; width: 50%; height: 3px; background: var(--secondary-rose); bottom: -10px; left: 25%; }
+        .btn-whatsapp { background-color: #25d366; color: white; border-radius: 30px; padding: 10px 25px; font-weight: 600; }
+        .btn-whatsapp:hover { background-color: #128c7e; color: white; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand text-secondary" href="/">{{ config.nombre_sitio|default:"Palo de Rosa" }}</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#Arreglos Florales">Rosas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#Ropa">Ropa</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#Cosméticos">Cosméticos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#Juguetes">Juguetes</a></li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link btn btn-outline-secondary ms-lg-3" href="{% url 'dashboard' %}">Admin Panel</a></li>
+                    {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero-section">
+        <div class="container">
+            <h1 class="display-3 text-secondary">{{ config.nombre_sitio|default:"Palo de Rosa" }}</h1>
+            <p class="lead">Elegancia sintética que perdura para siempre.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <footer class="bg-white py-5 mt-5 border-top">
+        <div class="container text-center">
+            <p class="text-muted mb-0">&copy; 2025 {{ config.nombre_sitio|default:"Palo de Rosa" }}. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -46,4 +46,8 @@ urlpatterns = [
 
     # Configuración
     path('configuracion/', views.configurar_sitio, name='configurar_sitio'),
+
+    # Autenticación
+    path('login/', views.login_view, name='login'),
+    path('logout/', views.logout_view, name='logout'),
 ]
