@@ -1,0 +1,27 @@
+{% extends 'inventario/base.html' %}
+
+{% block content %}
+<h1 class="main-title">Secciones / Tipos de Productos</h1>
+<a href="{% url 'formulario_seccion' %}" class="btn btn-primary mb-3">Nueva Sección</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for s in secciones %}
+        <tr>
+            <td>{{ s.nombre }}</td>
+            <td>{{ s.descripcion }}</td>
+            <td>
+                <a href="{% url 'editar_seccion' s.id %}" class="btn btn-sm btn-warning">Editar</a>
+                <button onclick="confirmDelete('{% url 'eliminar_seccion' s.id %}')" class="btn btn-sm btn-danger">Eliminar</button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

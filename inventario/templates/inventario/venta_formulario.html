@@ -1,0 +1,35 @@
+{% extends 'inventario/base.html' %}
+
+{% block content %}
+<h1 class="main-title">Registrar Nueva Venta</h1>
+<div class="card p-4">
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label">Cliente</label>
+            {{ form.cliente_nombre }}
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Método de Pago</label>
+            {{ form.metodo_pago }}
+        </div>
+        <hr>
+        <h5>Producto</h5>
+        <div class="mb-3">
+            <label class="form-label">Seleccionar Producto</label>
+            <select name="producto_id" class="form-select select2">
+                {% for p in productos %}
+                <option value="{{ p.id }}">{{ p.nombre }} - ${{ p.precio }} (Stock: {{ p.stock }})</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Cantidad</label>
+            <input type="number" name="cantidad" class="form-control" value="1" min="1">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Completar Venta</button>
+        <a href="{% url 'lista_ventas' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

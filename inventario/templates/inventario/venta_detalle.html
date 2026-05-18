@@ -1,0 +1,40 @@
+{% extends 'inventario/base.html' %}
+
+{% block content %}
+<h1 class="main-title">Detalle de Venta #{{ venta.id }}</h1>
+<div class="card p-4">
+    <div class="row">
+        <div class="col-md-6">
+            <p><strong>Cliente:</strong> {{ venta.cliente_nombre }}</p>
+            <p><strong>Fecha:</strong> {{ venta.fecha|date:"d/m/Y H:i" }}</p>
+            <p><strong>Método de Pago:</strong> {{ venta.get_metodo_pago_display }}</p>
+        </div>
+        <div class="col-md-6 text-end">
+            <h3>Total: ${{ venta.total }}</h3>
+        </div>
+    </div>
+    <hr>
+    <h5>Productos</h5>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio Unitario</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for detalle in venta.detalles.all %}
+            <tr>
+                <td>{{ detalle.producto.nombre }}</td>
+                <td>{{ detalle.cantidad }}</td>
+                <td>${{ detalle.precio_unitario }}</td>
+                <td>${% widthratio detalle.cantidad 1 detalle.precio_unitario %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'lista_ventas' %}" class="btn btn-secondary mt-3">Volver al Historial</a>
+</div>
+{% endblock %}

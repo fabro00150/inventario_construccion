@@ -1,0 +1,18 @@
+Watching for file changes with StatReloader
+Error: That port is already in use.
+[18/May/2026 00:41:09] "GET /catalogo/ HTTP/1.1" 200 3093
+[18/May/2026 00:41:09] "GET /static/css/style.min.css HTTP/1.1" 404 1865
+[18/May/2026 00:41:09] "GET /static/css/custom.css HTTP/1.1" 200 893
+[18/May/2026 00:41:11] "GET /admin/login/?next=/ HTTP/1.1" 200 4068
+[18/May/2026 00:41:11] "GET /static/admin/css/base.css HTTP/1.1" 200 23100
+[18/May/2026 00:41:11] "GET /static/admin/css/login.css HTTP/1.1" 200 951
+[18/May/2026 00:41:11] "GET /static/admin/css/dark_mode.css HTTP/1.1" 200 3538
+[18/May/2026 00:41:11] "GET /static/admin/js/theme.js HTTP/1.1" 200 1653
+[18/May/2026 00:41:11] "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2810
+[18/May/2026 00:41:11] "GET /static/admin/css/responsive.css HTTP/1.1" 200 16273
+[18/May/2026 00:41:11] "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+[18/May/2026 00:41:12] "POST /admin/login/?next=/ HTTP/1.1" 302 0
+[18/May/2026 00:41:12] "GET / HTTP/1.1" 200 11204
+[18/May/2026 00:41:12] "GET /static/css/style.min.css HTTP/1.1" 404 1865
+[18/May/2026 00:41:14] "GET / HTTP/1.1" 200 11204
+[18/May/2026 00:41:14] "GET /static/css/style.min.css HTTP/1.1" 404 1865
